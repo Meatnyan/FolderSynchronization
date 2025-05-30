@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FolderSynchronization": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Source Folder\" \"C:\\Replica Folder\" \"5000\" \"C:\\Log File Folder\\Log File.log\""
+    }
+  }
+}
