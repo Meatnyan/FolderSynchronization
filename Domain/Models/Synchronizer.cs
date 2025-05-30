@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using Common.Interfaces;
+using Domain.Interfaces;
 using Domain.Models.Extensions;
 using System.Security.Cryptography;
 using static Domain.Models.Extensions.NameHashDictionaryExtensions;
@@ -7,7 +8,7 @@ namespace Domain.Models;
 
 public class Synchronizer : ISynchronizing
 {
-    public Synchronizer(string sourceFolderPath, string replicaFolderPath, int syncInterval, Logger logger)
+    public Synchronizer(string sourceFolderPath, string replicaFolderPath, int syncInterval, ILogging logger)
     {
         if (string.IsNullOrWhiteSpace(sourceFolderPath))
         {
@@ -35,7 +36,7 @@ public class Synchronizer : ISynchronizing
     private readonly string _sourceFolderPath;
     private readonly string _replicaFolderPath;
     private readonly int _synchronizationInterval;
-    private readonly Logger _logger;
+    private readonly ILogging _logger;
 
     private Dictionary<string, byte[]> _previousSourceNameHashDict = [];
     private Dictionary<string, byte[]> _previousReplicaNameHashDict = [];

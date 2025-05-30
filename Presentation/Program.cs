@@ -2,6 +2,7 @@
 using static Domain.Models.Constants.ValidationConstants;
 using Validator = Domain.Models.Validator;
 using Domain.Models;
+using Domain.Interfaces;
 
 namespace Presentation;
 
@@ -64,7 +65,7 @@ Beginning folder synchronization.
         );
     }
 
-    private static void HandleSyncInterval(Validator validator, string syncInterval)
+    private static void HandleSyncInterval(IValidating validator, string syncInterval)
     {
         if (validator is null)
         {
@@ -101,7 +102,7 @@ Beginning folder synchronization.
         }
     }
 
-    private static void HandleFolderPaths(Validator validator, string[] folderPaths)
+    private static void HandleFolderPaths(IValidating validator, string[] folderPaths)
     {
         if (validator is null)
         {
@@ -129,7 +130,7 @@ Beginning folder synchronization.
         }
     }
 
-    private static void HandleArgumentCount(Validator validator, string[] args)
+    private static void HandleArgumentCount(IValidating validator, string[] args)
     {
         if (validator is null)
         {
@@ -150,7 +151,7 @@ Beginning folder synchronization.
         }
     }
 
-    private static void HandleLogFilePath(Validator validator, string logFilePath)
+    private static void HandleLogFilePath(IValidating validator, string logFilePath)
     {
         if (validator is null)
         {
