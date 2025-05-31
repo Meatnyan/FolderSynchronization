@@ -139,13 +139,14 @@ Beginning folder synchronization.
 
         if (validator.ValidateArgumentCount(args) == ValidatorStatusCode.ArgumentCountError)
         {
-            Console.WriteLine(@"Error: Incorrect argument count.
-                Provide 4 arguments (enclosed in quotes and separated by spaces):
-                1. Source folder path;
-                2. Replica folder path;
-                3. Synchronization interval (in ms);
-                4. Log file path.
-                Exiting program.");
+            Console.WriteLine(@"
+Error: Incorrect argument count.
+Provide 4 arguments (enclosed in quotes and separated by spaces):
+1. Source folder path;
+2. Replica folder path;
+3. Synchronization interval (in ms);
+4. Log file path.
+Exiting program.");
 
             Environment.Exit((int)ExitCode.ArgumentCountError);
         }
