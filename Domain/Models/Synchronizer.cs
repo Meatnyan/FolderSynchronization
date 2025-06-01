@@ -180,7 +180,7 @@ public class Synchronizer : ISynchronizing
             }
             else
             {
-                // just copy the file if either the hash or name + hash changed
+                // either the hash or name + hash changed
                 File.Copy($"{_sourceFolderPath}\\{nameHashPair.Key}",
                     $"{_replicaFolderPath}\\{nameHashPair.Key}", overwrite: true);
 
@@ -224,7 +224,15 @@ public class Synchronizer : ISynchronizing
             }
             else
             {
-                _logger.LogFileAddedToSource(nameHashPair.Key, performedBySynchronizer: false);
+                if (_previousSourceNameHashDict.ContainsName(nameHashPair.Key))
+                {
+                    // file got modified
+                    _logger.LogFileModifiedInSource(nameHashPair.Key, performedBySynchronizer: false);
+                }
+                else
+                {
+                    _logger.LogFileAddedToSource(nameHashPair.Key, performedBySynchronizer: false);
+                }
             }
         }
 
@@ -277,7 +285,15 @@ public class Synchronizer : ISynchronizing
             }
             else
             {
-                _logger.LogFileAddedToReplica(nameHashPair.Key, performedBySynchronizer: false);
+                if (_previousReplicaNameHashDict.ContainsName(nameHashPair.Key))
+                {
+                    // file got modified
+                    _logger.LogFileModifiedInReplica(nameHashPair.Key, performedBySynchronizer: false);
+                }
+                else
+                {
+                    _logger.LogFileAddedToReplica(nameHashPair.Key, performedBySynchronizer: false);
+                }
             }
         }
 
