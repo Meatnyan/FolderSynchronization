@@ -1,4 +1,5 @@
-﻿using Common.Interfaces;
+﻿using Common.Extensions;
+using Common.Interfaces;
 using static Domain.Models.Constants.TextConstants;
 
 namespace Domain.Models;
@@ -137,7 +138,7 @@ public class Logger : ILogging
         }
 
 
-        LogToConsoleAndFile($"!!! File operation error: \"{errorMessage}\"", performedBySynchronizer: true);
+        LogToConsoleAndFile($"{ERROR_INDICATOR}File operation error: \"{errorMessage}\"", performedBySynchronizer: true);
     }
 
     private void LogToConsoleAndFile(string message, bool performedBySynchronizer)
@@ -148,26 +149,21 @@ public class Logger : ILogging
                 $" cannot be null or whitespace.", nameof(message));
         }
 
-        message = $"({DateTime.Now})" +
-            $"{COLUMN_SEPARATOR}{(performedBySynchronizer ? SOURCE_SYNCHRONIZER : SOURCE_EXTERNAL).PadRight(SOURCE_COLUMN_WIDTH)}" +
-            $"{COLUMN_SEPARATOR}{message}";
+        message = message.FormatAsLog(performedBySynchronizer);
 
         Console.WriteLine(message);
 
         try
         {
-            using (FileStream fileStream = File.OpenWrite(_logFilePath))
+            using (StreamWriter writer = File.AppendText(_logFilePath))
             {
-                using (StreamWriter writer = new StreamWriter(fileStream))
-                {
-                    writer.WriteLine(message);
-                }
+                writer.WriteLine(message);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"({DateTime.Now}){SOURCE_SYNCHRONIZER}" +
-                $"!!! Error while attempting to write to log file: \"{ex.Message}\"");
+            Console.WriteLine($"{ERROR_INDICATOR}Error while attempting to write to log file: \"{ex.Message}\""
+                .FormatAsLog(performedBySynchronizer: true));
         }
     }
 }

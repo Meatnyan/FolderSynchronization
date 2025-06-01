@@ -268,7 +268,10 @@ Exiting program.");
                 ?? throw new ArgumentException($"Could not get directory name from" +
                 $" \"{logFilePath}\".", nameof(logFilePath)));
 
-            File.Create(logFilePath);
+            using (FileStream fileStream = File.Create(logFilePath))
+            {
+                // simply create the file and close the file stream
+            }
 
             Console.WriteLine($"Successfully created log file \"{logFilePath}\".");
         }
