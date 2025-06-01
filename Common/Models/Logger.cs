@@ -149,7 +149,8 @@ public class Logger : ILogging
         }
 
         message = $"({DateTime.Now})" +
-            $"{(performedBySynchronizer ? SOURCE_SYNCHRONIZER : SOURCE_EXTERNAL)}{message}";
+            $"{COLUMN_SEPARATOR}{(performedBySynchronizer ? SOURCE_SYNCHRONIZER : SOURCE_EXTERNAL).PadRight(SOURCE_COLUMN_WIDTH)}" +
+            $"{COLUMN_SEPARATOR}{message}";
 
         Console.WriteLine(message);
 
